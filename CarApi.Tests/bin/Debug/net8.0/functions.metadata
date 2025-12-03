@@ -1,0 +1,257 @@
+[
+  {
+    "name": "DeleteChargingSchedule",
+    "scriptFile": "CarApi.dll",
+    "entryPoint": "CarApi.Functions.DeleteChargingSchedule.Run",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "req",
+        "direction": "In",
+        "type": "httpTrigger",
+        "authLevel": "Anonymous",
+        "methods": [
+          "delete"
+        ],
+        "route": "car/{deviceId}/schedules/{scheduleId}",
+        "properties": {}
+      },
+      {
+        "name": "$return",
+        "type": "http",
+        "direction": "Out"
+      }
+    ]
+  },
+  {
+    "name": "ExecuteScheduledCharging",
+    "scriptFile": "CarApi.dll",
+    "entryPoint": "CarApi.Functions.ExecuteScheduledCharging.Run",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "timerInfo",
+        "direction": "In",
+        "type": "timerTrigger",
+        "schedule": "0 * * * * *",
+        "properties": {}
+      }
+    ]
+  },
+  {
+    "name": "GetCarStatus",
+    "scriptFile": "CarApi.dll",
+    "entryPoint": "CarApi.Functions.GetCarStatus.Run",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "req",
+        "direction": "In",
+        "type": "httpTrigger",
+        "authLevel": "Anonymous",
+        "methods": [
+          "get"
+        ],
+        "route": "car/{deviceId}/status",
+        "properties": {}
+      },
+      {
+        "name": "$return",
+        "type": "http",
+        "direction": "Out"
+      }
+    ]
+  },
+  {
+    "name": "GetChargingSchedule",
+    "scriptFile": "CarApi.dll",
+    "entryPoint": "CarApi.Functions.GetChargingSchedule.Run",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "req",
+        "direction": "In",
+        "type": "httpTrigger",
+        "authLevel": "Anonymous",
+        "methods": [
+          "get"
+        ],
+        "route": "car/{deviceId}/schedules",
+        "properties": {}
+      },
+      {
+        "name": "$return",
+        "type": "http",
+        "direction": "Out"
+      }
+    ]
+  },
+  {
+    "name": "ListCars",
+    "scriptFile": "CarApi.dll",
+    "entryPoint": "CarApi.Functions.ListCars.Run",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "req",
+        "direction": "In",
+        "type": "httpTrigger",
+        "authLevel": "Function",
+        "methods": [
+          "get"
+        ],
+        "route": "cars",
+        "properties": {}
+      },
+      {
+        "name": "$return",
+        "type": "http",
+        "direction": "Out"
+      }
+    ]
+  },
+  {
+    "name": "ProcessTelemetry",
+    "scriptFile": "CarApi.dll",
+    "entryPoint": "CarApi.Functions.ProcessTelemetry.Run",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "events",
+        "direction": "In",
+        "type": "eventHubTrigger",
+        "eventHubName": "messages/events",
+        "connection": "IoTHubEventHubEndpoint",
+        "cardinality": "Many",
+        "dataType": "String",
+        "properties": {}
+      }
+    ]
+  },
+  {
+    "name": "RegisterCar",
+    "scriptFile": "CarApi.dll",
+    "entryPoint": "CarApi.Functions.RegisterCar.Run",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "req",
+        "direction": "In",
+        "type": "httpTrigger",
+        "authLevel": "Function",
+        "methods": [
+          "post"
+        ],
+        "route": "car/{deviceId}/register",
+        "properties": {}
+      },
+      {
+        "name": "$return",
+        "type": "http",
+        "direction": "Out"
+      }
+    ]
+  },
+  {
+    "name": "SetChargingSchedule",
+    "scriptFile": "CarApi.dll",
+    "entryPoint": "CarApi.Functions.SetChargingSchedule.Run",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "req",
+        "direction": "In",
+        "type": "httpTrigger",
+        "authLevel": "Anonymous",
+        "methods": [
+          "post"
+        ],
+        "route": "car/{deviceId}/schedules",
+        "properties": {}
+      },
+      {
+        "name": "$return",
+        "type": "http",
+        "direction": "Out"
+      }
+    ]
+  },
+  {
+    "name": "StartCharging",
+    "scriptFile": "CarApi.dll",
+    "entryPoint": "CarApi.Functions.StartCharging.Run",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "req",
+        "direction": "In",
+        "type": "httpTrigger",
+        "authLevel": "Anonymous",
+        "methods": [
+          "post"
+        ],
+        "route": "car/{deviceId}/charging/start",
+        "properties": {}
+      },
+      {
+        "name": "$return",
+        "type": "http",
+        "direction": "Out"
+      }
+    ]
+  },
+  {
+    "name": "StopCharging",
+    "scriptFile": "CarApi.dll",
+    "entryPoint": "CarApi.Functions.StopCharging.Run",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "req",
+        "direction": "In",
+        "type": "httpTrigger",
+        "authLevel": "Anonymous",
+        "methods": [
+          "post"
+        ],
+        "route": "car/{deviceId}/charging/stop",
+        "properties": {}
+      },
+      {
+        "name": "$return",
+        "type": "http",
+        "direction": "Out"
+      }
+    ]
+  }
+]

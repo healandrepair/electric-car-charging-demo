@@ -1,0 +1,13 @@
+*.js.map
+*.ts
+.git*
+.vscode
+local.settings.json
+test
+__azurite_db*__.json
+__blobstorage__
+__queuestorage__
+# Exclude test project from deployment
+../CarApi.Tests/
+CarApi.Tests/
+*.Tests/
