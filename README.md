@@ -16,7 +16,7 @@ Stack:
 To run:
 * Run frontend eg ng serve --configuration production
 * Run CarConsoleApp
-* Use connectionString for device for ConsoleApp.
+* Setup and use connectionString for device for ConsoleApp from Azure.
 * Setup Azure environment  
 
 
