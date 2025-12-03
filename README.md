@@ -20,7 +20,7 @@ Stack:
 * Setup Azure environment  
 
 
-**Dev Notes and thoughts:**
+**Dev Notes, TODOs and thoughts:**
 
 CORS currently allows local access, but for production you’ll need to configure it properly to only allow requests from the deployed frontend URL.
 
