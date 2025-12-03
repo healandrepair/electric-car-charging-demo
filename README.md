@@ -1,6 +1,14 @@
 This is a electric car charging demo app. 
 
 This simulates the battery charging and depletion, with the ability to schedule, stop and start battery charging of your electric car.
+Stack:
+* AngularJS for frontend
+* Azure Functions for exposing REST APIs
+* IoT Messaging: Azure IoT Hub for device connectivity and message ingestion
+* C# console application using the Azure IoT Device SDK to simulate car battery level and charging state
+* Azure Table Storage for creating, and scheduling car charging schedule data
+
+
 <img width="1370" height="801" alt="image" src="https://github.com/user-attachments/assets/ca562d92-c3f7-42b5-bae5-6f6205af1987" />
 <img width="1184" height="436" alt="image" src="https://github.com/user-attachments/assets/33edc009-56fa-4f66-a05a-de4714a02fa6" />
 
