@@ -1,6 +1,7 @@
 This is a electric car charging demo app. 
 
 This simulates the battery charging and depletion, with the ability to schedule, stop and start battery charging of your electric car.
+
 Stack:
 * AngularJS for frontend
 * Azure Functions for exposing REST APIs
