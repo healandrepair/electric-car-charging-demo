@@ -13,6 +13,11 @@ Stack:
 <img width="1370" height="801" alt="image" src="https://github.com/user-attachments/assets/ca562d92-c3f7-42b5-bae5-6f6205af1987" />
 <img width="1184" height="436" alt="image" src="https://github.com/user-attachments/assets/33edc009-56fa-4f66-a05a-de4714a02fa6" />
 
+To run:
+* Run frontend eg ng serve --configuration production
+* Run CarConsoleApp
+* Use connectionString for device for ConsoleApp.
+* Setup Azure environment  
 
 
 *Dev Notes and thoughts:*
