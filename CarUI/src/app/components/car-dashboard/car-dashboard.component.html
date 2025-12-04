@@ -1,0 +1,188 @@
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <h1>Electric Car Battery Dashboard</h1>
+    <p class="subtitle">Monitor and control your electric car's battery</p>
+  </header>
+
+  <!-- Validation Popup -->
+  <div class="modal-overlay" *ngIf="showValidationPopup" (click)="closeValidationPopup()">
+    <div class="modal-dialog validation-popup" (click)="$event.stopPropagation()">
+      <div class="modal-header validation-header">
+        <h3>⚠ Validation Error</h3>
+        <button class="modal-close" (click)="closeValidationPopup()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>{{ validationMessage }}</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-validation-close" (click)="closeValidationPopup()">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error and Success Messages -->
+  <div class="messages">
+    <div class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+    <div class="success-message" *ngIf="successMessage">
+      {{ successMessage }}
+    </div>
+  </div>
+
+  <!-- Battery Status Card -->
+  <div class="card battery-status-card">
+    <h2>Battery Status</h2>
+
+    <div *ngIf="isLoading && !batteryStatus" class="loading">
+      Loading battery status...
+    </div>
+
+    <div *ngIf="batteryStatus" class="battery-info">
+      <!-- Battery Level Display -->
+      <div class="battery-visual">
+        <div class="battery-icon" [ngClass]="getBatteryLevelClass()">
+          <div class="battery-fill" [style.width.%]="batteryStatus.batteryLevel"></div>
+          <span class="battery-percentage">{{ batteryStatus.batteryLevel }}%</span>
+        </div>
+        <div class="battery-emoji">{{ getBatteryIcon() }}</div>
+      </div>
+
+      <!-- Charging Status -->
+      <div class="status-row">
+        <span class="status-label">Charging Status:</span>
+        <span class="status-value" [ngClass]="batteryStatus.isCharging ? 'charging' : 'not-charging'">
+          {{ batteryStatus.isCharging ? 'Charging' : 'Not Charging' }}
+        </span>
+      </div>
+
+      <!-- Device ID -->
+      <div class="status-row">
+        <span class="status-label">Device ID:</span>
+        <span class="status-value">{{ batteryStatus.deviceId }}</span>
+      </div>
+
+      <!-- Last Updated -->
+      <div class="status-row">
+        <span class="status-label">Last Updated:</span>
+        <span class="status-value">{{ batteryStatus.lastUpdated | date:'short' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charging Controls Card -->
+  <div class="card controls-card">
+    <h2>Charging Controls</h2>
+
+    <div class="button-group">
+      <button
+        class="btn btn-start"
+        (click)="startCharging()"
+        [disabled]="isChargingActionInProgress || (batteryStatus?.isCharging ?? false)">
+        <span *ngIf="!isChargingActionInProgress">Start Charging</span>
+        <span *ngIf="isChargingActionInProgress">Processing...</span>
+      </button>
+
+      <button
+        class="btn btn-stop"
+        (click)="stopCharging()"
+        [disabled]="isChargingActionInProgress || !(batteryStatus?.isCharging ?? false)">
+        <span *ngIf="!isChargingActionInProgress">Stop Charging</span>
+        <span *ngIf="isChargingActionInProgress">Processing...</span>
+      </button>
+    </div>
+
+    <div class="control-hint">
+      <p *ngIf="batteryStatus?.isCharging">Your electric car is currently charging</p>
+      <p *ngIf="!batteryStatus?.isCharging">Your electric car is not charging</p>
+    </div>
+  </div>
+
+  <!-- Current Schedules Card -->
+  <div class="card current-schedule-card">
+    <div class="card-header-with-action">
+      <h2>Current Schedules</h2>
+      <button
+        class="btn btn-refresh"
+        (click)="loadChargingSchedules()"
+        [disabled]="isLoading">
+        <span class="btn-icon">🔄</span>
+        Refresh
+      </button>
+    </div>
+
+    <div class="current-schedule-info">
+      <div *ngIf="chargingSchedules.length > 0" class="schedules-list">
+        <div *ngFor="let schedule of chargingSchedules" class="schedule-item">
+          <div class="schedule-details">
+            <div class="schedule-row">
+              <span class="schedule-label">Scheduled:</span>
+              <span class="schedule-value">{{ getScheduleTimeString(schedule) }}</span>
+            </div>
+            <div class="schedule-row">
+              <span class="schedule-label">Status:</span>
+              <span class="schedule-value" [ngClass]="schedule.isCompleted ? 'status-completed' : 'status-active'">
+                {{ schedule.isCompleted ? '✓ Completed' : 'Active' }}
+              </span>
+            </div>
+          </div>
+          <button
+            class="btn btn-delete"
+            (click)="deleteSchedule(schedule.id!)"
+            [disabled]="isLoading">
+            <span class="btn-icon">🗑️</span>
+            Delete
+          </button>
+        </div>
+      </div>
+      <div *ngIf="chargingSchedules.length === 0" class="no-schedule">
+        <p>No schedules currently set</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add New Schedule Card -->
+  <div class="card schedule-card">
+    <h2>Add New Schedule</h2>
+
+    <div class="schedule-form">
+      <div class="form-group">
+        <label for="scheduleDate">Date:</label>
+        <input
+          type="date"
+          id="scheduleDate"
+          [(ngModel)]="newScheduleDate"
+          [min]="getTodayDate()"
+          class="date-input"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="scheduleTime">Time (NZ Time):</label>
+        <input
+          type="time"
+          id="scheduleTime"
+          [(ngModel)]="newScheduleTime"
+          class="time-input">
+      </div>
+
+      <button
+        class="btn btn-primary"
+        (click)="addSchedule()"
+        [disabled]="isLoading">
+        <span class="btn-icon">➕</span>
+        Add Schedule
+      </button>
+
+      <div class="schedule-info">
+        <p>Schedule a date and time for your car to automatically start charging</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Info -->
+  <footer class="dashboard-footer">
+    <p>Connected to device: <strong>{{ deviceId }}</strong></p>
+    <p class="info-text">Data updates every 5 seconds</p>
+  </footer>
+</div>

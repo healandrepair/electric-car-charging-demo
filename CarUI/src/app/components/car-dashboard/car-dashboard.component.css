@@ -1,0 +1,597 @@
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.dashboard-header h1 {
+  color: #1a1a1a;
+  margin-bottom: 10px;
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+.subtitle {
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+/* Validation Popup */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-dialog {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 450px;
+  animation: slideIn 0.3s ease;
+  overflow: hidden;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+}
+
+.validation-popup .validation-header {
+  background: linear-gradient(135deg, #ff9800, #ffa726);
+  color: white;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.3s ease;
+}
+
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.modal-body {
+  padding: 40px 25px;
+  text-align: center;
+}
+
+.modal-body p {
+  font-size: 1.1rem;
+  color: #555;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.modal-footer {
+  padding: 20px 25px;
+  border-top: 2px solid #f0f0f0;
+  text-align: center;
+}
+
+.btn-validation-close {
+  background: linear-gradient(135deg, #ff9800, #ffa726);
+  color: white;
+  padding: 12px 40px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-validation-close:hover {
+  background: linear-gradient(135deg, #f57c00, #ff9800);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+}
+
+/* Messages */
+.messages {
+  margin-bottom: 20px;
+}
+
+.error-message {
+  background-color: #fee;
+  border-left: 4px solid #f44;
+  color: #c33;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+}
+
+.success-message {
+  background-color: #efe;
+  border-left: 4px solid #4c4;
+  color: #393;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+}
+
+/* Cards */
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card h2 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 10px;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+/* Battery Status */
+.battery-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.battery-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.battery-icon {
+  width: 200px;
+  height: 80px;
+  border: 3px solid #333;
+  border-radius: 8px;
+  position: relative;
+  background: #f5f5f5;
+  overflow: hidden;
+}
+
+.battery-icon::after {
+  content: '';
+  position: absolute;
+  right: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 30px;
+  background: #333;
+  border-radius: 0 4px 4px 0;
+}
+
+.battery-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4caf50, #8bc34a);
+  transition: width 0.5s ease;
+  border-radius: 4px;
+}
+
+.battery-high .battery-fill {
+  background: linear-gradient(90deg, #4caf50, #8bc34a);
+}
+
+.battery-medium .battery-fill {
+  background: linear-gradient(90deg, #ff9800, #ffc107);
+}
+
+.battery-low .battery-fill {
+  background: linear-gradient(90deg, #ff5722, #ff9800);
+}
+
+.battery-critical .battery-fill {
+  background: linear-gradient(90deg, #f44336, #ff5722);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.battery-percentage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  z-index: 1;
+}
+
+.battery-emoji {
+  font-size: 4rem;
+}
+
+/* Status Rows */
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  background: #f9f9f9;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.status-label {
+  font-weight: 600;
+  color: #555;
+}
+
+.status-value {
+  color: #333;
+}
+
+.status-value.charging {
+  color: #4caf50;
+  font-weight: 600;
+}
+
+.status-value.not-charging {
+  color: #666;
+}
+
+/* Buttons */
+.button-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.btn {
+  padding: 15px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-icon {
+  font-size: 1.2rem;
+}
+
+.btn-start {
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  color: white;
+}
+
+.btn-start:hover:not(:disabled) {
+  background: linear-gradient(135deg, #45a049, #5cb85c);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.btn-stop {
+  background: linear-gradient(135deg, #f44336, #ef5350);
+  color: white;
+}
+
+.btn-stop:hover:not(:disabled) {
+  background: linear-gradient(135deg, #e53935, #e57373);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #2196f3, #42a5f5);
+  color: white;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #1e88e5, #64b5f6);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+.btn-delete {
+  background: linear-gradient(135deg, #ff6b6b, #ff8787);
+  color: white;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+.btn-delete:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ff5252, #ff6b6b);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+}
+
+.control-hint {
+  text-align: center;
+  color: #666;
+  font-size: 0.95rem;
+  padding: 10px;
+  background: #f9f9f9;
+  border-radius: 6px;
+}
+
+/* Current Schedule Card */
+.card-header-with-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 10px;
+}
+
+.card-header-with-action h2 {
+  margin-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.btn-refresh {
+  background: linear-gradient(135deg, #9c27b0, #ba68c8);
+  color: white;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+}
+
+.btn-refresh:hover:not(:disabled) {
+  background: linear-gradient(135deg, #8e24aa, #ab47bc);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3);
+}
+
+.current-schedule-info {
+  padding: 15px;
+}
+
+.schedules-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.schedule-item {
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  background: #fafafa;
+  transition: all 0.3s ease;
+}
+
+.schedule-item:hover {
+  border-color: #2196f3;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.2);
+}
+
+.schedule-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.schedule-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  background: #f9f9f9;
+  border-radius: 6px;
+}
+
+.schedule-label {
+  font-weight: 600;
+  color: #555;
+}
+
+.schedule-value {
+  color: #333;
+  font-weight: 500;
+}
+
+.schedule-value.status-active {
+  color: #2196f3;
+  font-weight: 600;
+}
+
+.schedule-value.status-completed {
+  color: #4caf50;
+  font-weight: 600;
+}
+
+.no-schedule {
+  text-align: center;
+  padding: 30px;
+  color: #999;
+  font-style: italic;
+}
+
+/* Schedule Form */
+.schedule-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.schedule-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.date-input,
+.time-input {
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  width: 100%;
+}
+
+.date-input:focus,
+.time-input:focus {
+  outline: none;
+  border-color: #2196f3;
+}
+
+.schedule-info {
+  background: #e3f2fd;
+  padding: 15px;
+  border-radius: 6px;
+  color: #1976d2;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Footer */
+.dashboard-footer {
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 2px solid #f0f0f0;
+  color: #fff;
+}
+
+.dashboard-footer p {
+  color: #fff;
+}
+
+.dashboard-footer strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.info-text {
+  font-size: 0.9rem;
+  color: #fff;
+  margin-top: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 15px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 2rem;
+  }
+
+  .battery-visual {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .battery-icon {
+    width: 150px;
+    height: 60px;
+  }
+
+  .battery-percentage {
+    font-size: 1.2rem;
+  }
+
+  .battery-emoji {
+    font-size: 3rem;
+  }
+
+  .status-row {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .button-group {
+    grid-template-columns: 1fr;
+  }
+}
